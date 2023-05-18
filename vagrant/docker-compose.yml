@@ -1,0 +1,18 @@
+services:
+  graphana:
+    image: grafana/grafana-oss
+    ports:
+      - "3000:3000"
+  prom:
+    image: prom/prometheus
+    ports:
+      - "9090:9090"
+  node_exporter:
+    image: quay.io/prometheus/node-exporter
+    command:
+      - '--path.rootfs=/host'
+    ports:
+      - "9100:9100"
+    volumes:
+      - "/:/host:ro,rslave"
+      - "/app/prometheus.yml:/etc/prometheus"
